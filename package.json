@@ -1,0 +1,33 @@
+{
+  "name": "youtube-freetime-organizer",
+  "description": "This application is used to register and organize your freetime in a manner to watch youtube videos. ",
+  "version": "0.0.0",
+  "private": true,
+  "author": "claudio djohnnatha duarte lourenco",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 13.13.0"
+  },
+  "directories": {
+    "api": "api"
+  },
+  "scripts": {
+    "start": "node ./api/config/bin/www",
+    "dev": "nodemon ./api/config/bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdjohnnatha/youtube-freetime-organizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdjohnnatha/youtube-freetime-organizer.git/issues"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.3",
+    "winston": "^3.2.1"
+  }
+}

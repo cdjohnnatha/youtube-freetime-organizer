@@ -1,0 +1,12 @@
+version: '3.8'
+
+services: 
+  youtube-freetime-organizer:
+    build: .
+    env_file: 
+      - .env
+    container_name: youtube_freetime_organizer_api
+    restart: unless-stopped
+    command: make dev
+    ports:
+      - 3000:3000
