@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "node ./api/config/bin/www",
-    "dev": "nodemon ./api/config/bin/www"
+    "dev": "NODE_ENV=dev nodemon ./api/config/bin/www"
   },
   "repository": {
     "type": "git",
@@ -23,11 +23,19 @@
     "url": "https://github.com/cdjohnnatha/youtube-freetime-organizer.git/issues"
   },
   "dependencies": {
+    "bottleneck": "^2.19.5",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.3",
     "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3"
   }
 }
