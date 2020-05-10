@@ -10,3 +10,17 @@ services:
     command: make dev
     ports:
       - 3000:3000
+    links:
+      - postgresdb
+  postgresdb:
+    image: postgres:${POSTGRES_IMAGE_VERSION}
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - youtube_freetime_organizer_data:/var/lib/postgresql/data
+volumes:
+  sales_cashback_api_data:
+      driver: local
