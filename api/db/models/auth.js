@@ -20,8 +20,20 @@ module.exports = (db) => {
     },
   });
 
+  Auth.isPasswordValid = async ({ email, password }) => {
+    const auth = await Auth.findOne({
+      where: { email },
+      attributes: ['password'],
+      raw: true,
+    });
+    if (auth) {
+      return bcrypt.compare(password, auth.password);
+    }
+    return false;
+  };
+
   Auth.associate = ({ Auth: auth, Users }) => {
-    auth.hasOne(Users, { foreignKey: 'auth_id' });
+    auth.hasOne(Users, { foreignKey: 'auth_id', as: 'users' });
   };
 
   return Auth;
