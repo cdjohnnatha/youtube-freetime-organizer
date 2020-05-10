@@ -3,17 +3,17 @@ const ModelSettings = require('../model-settings');
 const { normalize } = require('../../helpers/formatter-helpers');
 
 module.exports = (db) => {
-  const Users = db.define('Users', UsersDataTypes, {
+  const User = db.define('Users', UsersDataTypes, {
     ...ModelSettings,
     tableName: 'users',
     hooks: {
       beforeCreate: ({ dataValues }, _options) => {
-        dataValues = Users.normalizeParams(dataValues);
+        dataValues = User.normalizeParams(dataValues);
         return dataValues;
       },
     },
   });
-  Users.normalizeParams = (params) => {
+  User.normalizeParams = (params) => {
     const { first_name, last_name } = params;
     params.first_name = normalize(first_name);
     params.last_name = normalize(last_name);
@@ -21,7 +21,9 @@ module.exports = (db) => {
     return params;
   };
 
-  Users.associate = () => {};
+  User.associate = ({ Users, Auth }) => {
+    Users.belongsTo(Auth, { foreignKey: 'auth_id', as: 'auth_provider' });
+  };
 
-  return Users;
+  return User;
 };

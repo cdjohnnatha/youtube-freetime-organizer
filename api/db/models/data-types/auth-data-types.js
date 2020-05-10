@@ -11,17 +11,17 @@ module.exports = {
     primaryKey: true,
     type: INTEGER,
   },
-  auth_id: {
+  email: {
+    type: STRING(100),
     allowNull: false,
-    type: INTEGER,
+    unique: true,
+    validate: {
+      isEmail: true,
+    }
   },
-  first_name: {
+  password: {
+    type: STRING,
     allowNull: false,
-    type: STRING(70),
-  },
-  last_name: {
-    allowNull: false,
-    type: STRING(70),
   },
   createdAt: {
     type: DATE,

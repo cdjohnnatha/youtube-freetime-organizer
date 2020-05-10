@@ -1,0 +1,30 @@
+  Auth:
+    properties:
+      email:
+        type: "string"
+        example: "test@user.com.br"
+      password:
+        type: "string"
+        example: "test12345"
+    type: object
+  Token:
+    properties:
+      jwt:
+        type: "string"
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJkb21haW5faWQiOm51bGwsImlhdCI6MTU1MjUwMDEyNywiZXhwIjoxNTUyNTg2NTI3fQ.euk1Wm0DPsp6CaJMW1WYWkk9n_EQ2ygHbB_IHtCTqBo"
+    type: object
+  SignUp:
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      auth_provider:
+        properties:
+          email:
+            type: "string"
+            example: "test@user.com.br"
+          password:
+            type: "string"
+            example: "test12345"
+      type: object

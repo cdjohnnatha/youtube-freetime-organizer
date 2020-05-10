@@ -14,6 +14,7 @@ const { BAD_REQUEST } = houstonClientErrors;
 const usersBaseRoute = `${baseApiV1Routes}sign-up/`;
 
 let userParams = null;
+let authParams = null;
 let user = null;
 describe('Users-controller', () => {
   after(async () => {
@@ -21,8 +22,15 @@ describe('Users-controller', () => {
   });
   describe('Register user', () => {
     beforeEach(async () => {
-      ({ dataValues: userParams } = await Factory.build('Users'));
+      let users = Factory.build('Users');
+      let auth = Factory.build('Auth');
+
+      ([users, auth] = await Promise.all([users, auth]));
+      userParams = users.dataValues;
+      userParams.auth_provider = auth.dataValues;
+      delete userParams.auth_id;
       delete userParams.id;
+      delete userParams.auth_provider.id;
     });
 
     describe('with success params', () => {

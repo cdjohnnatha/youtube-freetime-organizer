@@ -7,6 +7,7 @@ const { BAD_REQUEST } = houstonClientErrors;
 
 const signUpController = async ({ body }, response) => {
   try {
+    console.log('body', body);
     const isParamsValid = await signupSchema.validate(body);
     if (isParamsValid) {
       const user = await createUserRepository(body);

@@ -1,9 +1,13 @@
-const { Users } = require('../db/models');
+const { Users, Auth } = require('../db/models');
 const logger = require('../config/logger');
 
 const createUserRepository = async (params) => {
   try {
-    const user = await Users.create(params);
+    const user = await Users.create(
+      params,
+      {
+        include: [{ model: Auth, as: 'auth_provider' }]
+      });
     logger.systemLogLevel({ body: user.dataValues, function: 'createUser' });
     return user;
   } catch (error) {

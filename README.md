@@ -23,7 +23,7 @@ The youtube-freetime-organizer is an api used to organize the freetime that can 
 
 ### 1.2. Database architecture
 
-![picture](api/public/images/youtube_freetime_organized_db_diagram.jpg)
+![picture](public/images/youtube_freetime_organized_db_diagram.jpg)
 
 ## 3. 📦 <a name='Installation'></a>Installation
 

@@ -1,0 +1,30 @@
+  User:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      created_at:
+        type: "string"
+      updated_at:
+        type: "string"
+    type: object
+  UserModel:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      created_at:
+        type: "string"
+      updated_at:
+        type: "string"
+      deleted_at:
+        type: "string"
+    type: object

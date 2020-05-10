@@ -1,0 +1,23 @@
+swagger: "2.0"
+info:
+  description: "This is a swagger documentation for youtube-freetime-organizer. For use most routes, you must authenticate"
+  version: "1.0.0"
+  title: "Swagger youtube-freetime-organizer"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:3000"
+basePath: "/api/"
+tags:
+  - name: "Auth"
+    description: "Authentication"
+  - name: "Resellers"
+    description: "Operations about resellers"
+schemes:
+  - "http"
+securityDefinitions:
+  auth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
