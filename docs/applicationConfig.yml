@@ -11,8 +11,6 @@ basePath: "/api/"
 tags:
   - name: "Auth"
     description: "Authentication"
-  - name: "Resellers"
-    description: "Operations about resellers"
 schemes:
   - "http"
 securityDefinitions:

@@ -15,7 +15,7 @@ function readSwaggerFilesFromFolder(folderPath) {
     // const swaggerJson = fs.createWriteStream(path.join(__dirname, './', '/public/swagger.json'));
     let files = fs
       .readdirSync(path.join(__dirname, './', folderPath))
-      .filter(file => (file.indexOf('.') !== 0) &&`` (file !== basename) && (file.slice(-4) === '.yml'));
+      .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-4) === '.yml'));
     files = files.map(file => path.join(__dirname, './', `${folderPath}${file}`));
     return files;
   } catch (error) {
