@@ -1,0 +1,27 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:13.13.0
+        environment:
+          DB_HOST: "localhost"
+          DB_NAME: youtube_freetime_organizer_test
+          DB_USER: youtube_freetime_organizer_test
+          DB_PASS: youtube_freetime_organizer_test
+          DB_PORT: 5432
+      - image: circleci/postgres:12.2
+        environment:
+          - POSTGRES_DB=youtube_freetime_organizer_test
+          - POSTGRES_USER=youtube_freetime_organizer_test
+          - POSTGRES_PASSWORD=youtube_freetime_organizer_test
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run database-migration
+      - run: npm test
+      # - run: npm run database-drop
+workflows:
+  TestBuildWorkflow:
+    jobs:
+    - build
+  version: 2.1
