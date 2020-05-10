@@ -9,6 +9,7 @@ const UserFactory = (factory) => {
       {
         first_name: () => name.firstName(),
         last_name: () => name.lastName(),
+        auth_id: factory.assoc('Auth', 'id'),
       },
   );
 };
