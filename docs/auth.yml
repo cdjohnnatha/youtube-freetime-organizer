@@ -54,4 +54,3 @@
             $ref: "#/definitions/Token"
         404:
           description: "User not found"
-        

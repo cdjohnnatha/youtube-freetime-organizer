@@ -1,0 +1,49 @@
+  TimesheetModel:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      user_id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      search_keywords:
+        type: "string"
+      status:
+        type: "string"
+        enum: ["IN_PROGRESS", "COMPLETED"]
+      total_days_to_complete_timesheet:
+        type: "number"
+      created_at:
+        type: "string"
+      updated_at:
+        type: "string"
+      deleted_at:
+        type: "string"
+    type: object
+  TimesheetInput:
+    properties:
+      name:
+        type: "string"
+        example: "Nodejs studies"
+      description:
+        type: "string"
+        example: "Studies regarding nodejs best practices."
+      search_keywords:
+        type: "string"
+        example: "best practices nodejs"
+      available_minutes_per_day:
+        type: "array"
+        example: [15, 120, 30, 150, 20, 40, 90]
+        items:
+          type: "number"
+        minItems: 7
+        maxItems: 7
+    required:
+      - name
+      - search_keywords
+      - available_minutes_per_day
+    type: object

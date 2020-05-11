@@ -9,14 +9,11 @@ const { BAD_REQUEST } = houstonClientErrors;
 
 const signUpController = async ({ body }, response) => {
   try {
-    console.log('body', body);
-    const isParamsValid = await signupSchema.validate(body);
-    if (isParamsValid) {
+      await signupSchema.validate(body);
       const user = await createUserRepository(body);
       logger.systemLogLevel({ body: user.dataValues, function: 'signUpController' });
       user.dataValues.token = 
       response.status(201).send(user);
-    }
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
     response.status(BAD_REQUEST.code).send(error);
