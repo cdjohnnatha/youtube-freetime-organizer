@@ -11,12 +11,18 @@ const VideoService = require('../services/video-services');
  */
 const createTimesheetRepository = async ({ available_minutes_per_day, ...params }) => {
   try {
-    let videoService = new VideoService();
-    await (await videoService.searchVideo(params.search_keywords)).buildVideosDetailsFromIds();
-    // const {
-    //   highest_freetime_minutes_of_week,
-    //   timesheet_schedule_hours,
-    // } = TimesheetScheduleHours.buildByAvailableMinutesArray(available_minutes_per_day);
+    const {
+      highest_freetime_minutes_of_week,
+      timesheet_schedule_hours,
+    } = TimesheetScheduleHours.buildByAvailableMinutesArray(available_minutes_per_day);
+
+    let videoService = new VideoService({
+      searchKeywords: params.search_keywords,
+      highestAvailableMinutesTime: highest_freetime_minutes_of_week,
+      availableHoursPerWeek: available_minutes_per_day,
+    });
+    const searchVideos = await videoService.searchVideo();
+    const videoDetails = await searchVideos.buildVideosDetailsFromIds();
     // const timesheet = await Timesheets.findOrCreate({
     //   where: {
     //     user_id: params.user_id,
