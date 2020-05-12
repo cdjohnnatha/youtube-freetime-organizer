@@ -3,7 +3,7 @@ const {
   STRING,
   DATE,
   TEXT,
-  ENUM,
+  FLOAT,
 } = require('sequelize');
 
 module.exports = {
@@ -13,11 +13,11 @@ module.exports = {
     primaryKey: true,
     type: INTEGER,
   },
-  user_id: {
+  timesheet_id: {
     allowNull: false,
     type: INTEGER,
   },
-  name: {
+  title: {
     type: STRING,
     allowNull: false,
   },
@@ -25,20 +25,13 @@ module.exports = {
     type: TEXT,
     allowNull: true,
   },
-  search_keywords: {
+  duration: {
+    type: FLOAT,
+    allowNull: false,
+  },
+  youtube_video_id_key: {
     type: STRING,
     allowNull: false,
-  },
-  status: {
-    type: ENUM,
-    values: ['IN_PROGRESS', 'COMPLETED'],
-    default: 'IN_PROGRESS',
-    allowNull: false,
-  },
-  total_days_complete_videos_list: {
-    type: INTEGER,
-    allowNull: true,
-    default: 0,
   },
   createdAt: {
     type: DATE,
@@ -47,6 +40,10 @@ module.exports = {
   updatedAt: {
     type: DATE,
     field: 'updated_at'
+  },
+  watchedAt: {
+    type: DATE,
+    field: 'watched_at'
   },
   deletedAt: {
     allowNull: true,

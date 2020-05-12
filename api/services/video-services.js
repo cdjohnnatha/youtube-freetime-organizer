@@ -2,16 +2,19 @@ const { google } = require('googleapis');
 const logger = require('../config/logger');
 const { formatYoutubeDuration } = require('../helpers/formatter-helpers');
 const VideoDurationHelper = require('../helpers/video-duration-helpers');
-
+const { TimesheetVideos, TimesheetVideoThumbnails } = require('../db/models');
+const videoDetailsMock = require('./__mock__/videosDetailsMock.json');
+const videoItemsMock = require('./__mock__/videosItemsMock.json');
 let instance = null;
 
 const MAX_YOUTURE_RESULTS_PER_PAGE = 50;
-
+const isProduction = process.env.NODE_ENV === 'production';
 class VideoService {
   constructor({ availableHoursPerWeek, highestAvailableMinutesTime, searchKeywords }) {
     const { MAX_ITEMS_VIDEO_SEARCH, YOUTUBE_SECRET_KEY } = process.env;
     this._youtube = google.youtube('v3');
     this._videosMapping = {};
+    this._videosList = [];
     this._videoIds = [];
     this._secretKey = YOUTUBE_SECRET_KEY;
     this._itemsPerPage = 1;
@@ -28,6 +31,14 @@ class VideoService {
 
   }
 
+  get videoMappingList() {
+    return this._videosMapping;
+  }
+
+  get totalDaysNeededToWatchVideoList() {
+    return this._daysNeededToWatchVideoList;
+  }
+
   async _searchListYoutube({ pageToken = '' }) {
     const searchResult = await this._youtube.search.list({
       q: this._searchKeywords,
@@ -42,7 +53,7 @@ class VideoService {
   };
 
   _buildVideoMapping(items) {
-    if (Array.isArray(items) && items.length > 0 ) {
+    if (Array.isArray(items) && items.length > 0) {
       items.forEach(({ id }) => {
         this._videoIds.push(id.videoId);
         this._videosMapping[`_${id.videoId}`] = {};
@@ -51,18 +62,46 @@ class VideoService {
     return this;
   }
 
-  _buildVideoDetails(items) {
-    if (Array.isArray(items) && items.length > 0 ) {
+  _buildThumbnails = (thumbnails) => {
+    const thumbnailList = [];
+    for (let key in thumbnails) {
+      thumbnailList.push({
+        image_quality_type: key,
+        ...thumbnails[key]
+      });
+    }
+
+    return thumbnailList;
+  }
+
+  _buildVideoDetails(items, timesheet_id) {
+    console.log('\n\n[_buildVideoDetails]');
+    console.log('[_buildVideoDetails]', timesheet_id);
+    if (Array.isArray(items) && items.length > 0) {
       let duration = null;
+      let timesheet_video_thumbnails = [];
+      let timesheetVideo = null;
       items.forEach(({ id, snippet, contentDetails }) => {
         duration = formatYoutubeDuration(contentDetails.duration);
         if (duration <= this._highestAvailableMinutesTime) {
-          this._videosMapping[`_${id}`] = {
+          timesheet_video_thumbnails = this._buildThumbnails(snippet.thumbnails);
+          timesheetVideo = TimesheetVideos.build({
             title: snippet.title,
             description: snippet.description,
-            thumbnails: snippet.thumbnails.default,
+            timesheet_video_thumbnails,
             duration,
-          };
+            timesheet_id,
+            youtube_video_id_key: id,
+          }, {
+            include: [
+              {
+                model: TimesheetVideoThumbnails,
+                as: 'timesheet_video_thumbnails'
+              }
+            ]
+          });
+          this._videosMapping[`_${id}`] = timesheetVideo;
+          this._videosList.push(timesheetVideo);
         } else {
           delete this._videosMapping[`_${id}`];
         }
@@ -84,29 +123,29 @@ class VideoService {
     return searchResult.data;
   }
 
-  get videoMappingList() {
-    return this._videosMapping;
-  }
-
   async searchVideo() {
     try {
       let nextPageToken = '';
       let items = null;
       let pageInfo = null;
       let hasAvailableVideos = true;
-      let itemsArr = [];
-      for (let count = 0; count < this._pendingPaginationHits; count += 1) {
-        if (hasAvailableVideos) {
-          ({
-            nextPageToken,
-            items,
-            pageInfo,
-          } = await this._searchListYoutube({ pageToken: nextPageToken }));
-          itemsArr = [...itemsArr, ...items];
-          hasAvailableVideos = (parseInt(pageInfo.totalResults) - this._itemsPerPage) > 0;
-        } else {
-          break;
-        }
+
+      let itemsArr = videoItemsMock;
+      if (isProduction) {
+        itemsArr = [];
+        for (let count = 0; count < this._pendingPaginationHits; count += 1) {
+          if (hasAvailableVideos) {
+            ({
+              nextPageToken,
+              items,
+              pageInfo,
+            } = await this._searchListYoutube({ pageToken: nextPageToken }));
+            itemsArr = [...itemsArr, ...items];
+            hasAvailableVideos = (parseInt(pageInfo.totalResults) - this._itemsPerPage) > 0;
+          } else {
+            break;
+          }
+        };
       }
       this._buildVideoMapping(itemsArr);
       return this;
@@ -115,27 +154,31 @@ class VideoService {
     }
   }
 
-  async buildVideosDetailsFromIds() {
+  async buildVideosDetailsFromIds(timesheet_id) {
     let nextPageToken = '';
     let items = null;
     let itemsList = [];
     let pageInfo = null;
     let hasAvailableVideos = true;
-    for (let count = 0; count < this._pendingPaginationHits; count += 1) {
-      if (hasAvailableVideos) {
-        ({
-          nextPageToken,
-          items,
-          pageInfo,
-        } = await this._listYoutubeVideos({ pageToken: nextPageToken }));
-        hasAvailableVideos = (parseInt(pageInfo.totalResults) - this._itemsPerPage) > 0;
-        itemsList = [...itemsList, ...items];
-      } else {
-        break;
+    if (isProduction) {
+      for (let count = 0; count < this._pendingPaginationHits; count += 1) {
+        if (hasAvailableVideos) {
+          ({
+            nextPageToken,
+            items,
+            pageInfo,
+          } = await this._listYoutubeVideos({ pageToken: nextPageToken }));
+          hasAvailableVideos = (parseInt(pageInfo.totalResults) - this._itemsPerPage) > 0;
+          itemsList = [...itemsList, ...items];
+        } else {
+          break;
+        }
       }
+    } else {
+      itemsList = videoDetailsMock.items;
     }
-    console.log('[itemsList]', itemsList);
-    this._buildVideoDetails(itemsList);
+    console.log('[itemsList]', timesheet_id);
+    this._buildVideoDetails(itemsList, timesheet_id);
     return this;
   }
 
@@ -146,6 +189,16 @@ class VideoService {
     }
     this._daysNeededToWatchVideoList = videoDurationHelper.totalDaysToWatchVideoList;
     return this;
+  }
+
+  async saveTimesheetVideos(transaction) {
+    if (this._videosList.length > 0 && transaction) {
+      let saving = this._videosList.map((timesheetVideo) => {
+        return timesheetVideo.save({ transaction });
+      });
+      saving = await Promise.all(saving);
+      return saving;
+    }
   }
 
   static getInstance() {

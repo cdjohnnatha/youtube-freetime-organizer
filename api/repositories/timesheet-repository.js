@@ -1,4 +1,4 @@
-const { Timesheets, TimesheetScheduleHours } = require('../db/models');
+const { Timesheets, TimesheetScheduleHours, TimesheetVideos, sequelize } = require('../db/models');
 const VideoService = require('../services/video-services');
 
 /**
@@ -10,6 +10,7 @@ const VideoService = require('../services/video-services');
  * @param {String}  search_keywords - Words to be search on youtube.
  */
 const createTimesheetRepository = async ({ available_minutes_per_day, ...params }) => {
+  const transaction = await sequelize.transaction();
   try {
     const {
       highest_freetime_minutes_of_week,
@@ -21,28 +22,41 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
       highestAvailableMinutesTime: highest_freetime_minutes_of_week,
       availableHoursPerWeek: available_minutes_per_day,
     });
-    const searchVideos = await videoService.searchVideo();
-    const videoDetails = await searchVideos.buildVideosDetailsFromIds();
-    // const timesheet = await Timesheets.findOrCreate({
-    //   where: {
-    //     user_id: params.user_id,
-    //     status: 'IN_PROGRESS',
-    //   },
-    //   defaults: {
-    //     ...params,
-    //     highest_freetime_minutes_of_week,
-    //     timesheet_schedule_hours,
-    //   },
-    //   include: [
-    //     {
-    //       model: TimesheetScheduleHours,
-    //       as: 'timesheet_schedule_hours',
-    //     }
-    //   ]
-    // });
+    let searchVideos = videoService.searchVideo();
+    let timesheet = Timesheets.findOrCreate({
+      where: {
+        user_id: params.user_id,
+        status: 'IN_PROGRESS',
+      },
+      defaults: {
+        ...params,
+        highest_freetime_minutes_of_week,
+        timesheet_schedule_hours,
+      },
+      include: [
+        {
+          model: TimesheetScheduleHours,
+          as: 'timesheet_schedule_hours',
+        }
+      ],
+      transaction,
+    });
+    ([searchVideos, timesheet] = await Promise.all([searchVideos, timesheet]))
+    if (Array.isArray(timesheet)) timesheet = timesheet[0];
+    const videoDetails = await searchVideos.buildVideosDetailsFromIds(timesheet.dataValues.id);
+    videoDetails.buildTotalDaysNeededToWatchVideoList();
 
+    let savingTimesheetVideos = videoDetails.saveTimesheetVideos(transaction);
+
+    let updateTimesheetPromise = timesheet.update({
+      total_days_complete_videos_list: videoDetails.totalDaysNeededToWatchVideoList
+    }, { transaction });
+    
+    await Promise.all([savingTimesheetVideos, updateTimesheetPromise]);
+    await transaction.commit();
     return timesheet;
   } catch (error) {
+    await transaction.rollback();
     throw error;
   }
 }

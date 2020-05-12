@@ -1,9 +1,8 @@
 const {
   INTEGER,
-  STRING,
   DATE,
-  TEXT,
   ENUM,
+  STRING,
 } = require('sequelize');
 
 module.exports = {
@@ -13,32 +12,27 @@ module.exports = {
     primaryKey: true,
     type: INTEGER,
   },
-  user_id: {
+  timesheet_video_id: {
     allowNull: false,
     type: INTEGER,
   },
-  name: {
-    type: STRING,
-    allowNull: false,
-  },
-  description: {
-    type: TEXT,
-    allowNull: true,
-  },
-  search_keywords: {
-    type: STRING,
-    allowNull: false,
-  },
-  status: {
+  image_quality_type: {
     type: ENUM,
-    values: ['IN_PROGRESS', 'COMPLETED'],
-    default: 'IN_PROGRESS',
+    values: ['default', 'medium', 'high', 'standard', 'maxres'],
+    default: 'default',
     allowNull: false,
   },
-  total_days_complete_videos_list: {
+  url: {
+    type: STRING,
+    allowNull: true,
+  },
+  width: {
     type: INTEGER,
     allowNull: true,
-    default: 0,
+  },
+  height: {
+    type: INTEGER,
+    allowNull: true,
   },
   createdAt: {
     type: DATE,
