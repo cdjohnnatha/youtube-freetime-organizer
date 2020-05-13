@@ -1,7 +1,8 @@
+const { houstonClientErrors } = require('houston-errors');
 const { createTimesheetRepository } = require('../../repositories/timesheet-repository');
 const { timesheetSchema } = require('./schemas/timesheet-schemas');
 const logger = require('../../config/logger');
-const { houstonClientErrors } = require('houston-errors');
+const { formatErrorMessage } = require('../../helpers/formatter-helpers');
 
 const { BAD_REQUEST } = houstonClientErrors;
 
@@ -14,7 +15,7 @@ const createTimesheetController = async ({ body, meta }, res) => {
     res.status(201).send(timesheet);
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
-    res.status(BAD_REQUEST.code).send(error);
+    res.status(BAD_REQUEST.code).send(formatErrorMessage(error));
   };
 };
 

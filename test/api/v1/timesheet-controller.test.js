@@ -7,6 +7,7 @@ const Factory = require('../../factory');
 const { shouldBehaveLikeTimesheet } = require('../../support/shared-examples/timesheet-shared-examples')
 const { shouldBehaveLikeTimesheetScheduledhours } = require('../../support/shared-examples/timesheet-scheduled-hours-shared-examples')
 const { shouldBehaveLikeTimesheetVideosList } = require('../../support/shared-examples/timesheet-videos-shared-examples')
+const i18n = require('../../../api/config/i18n');
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -100,6 +101,22 @@ describe('Users-controller', () => {
             .set('Authorization', authToken)
             .send(params);
           expect(response.statusCode).to.equal(400);
+        });
+        it('create twice timesheet with same search_keywords should return error', async () => {
+          const params = { ...timesheetParams };
+          let response = await chai
+            .request(app)
+            .post(timesheetsBaseRoute)
+            .set('Authorization', authToken)
+            .send(params);
+          expect(response.statusCode).to.equal(201);
+          response = await chai
+            .request(app)
+            .post(timesheetsBaseRoute)
+            .set('Authorization', authToken)
+            .send(params);
+          expect(response.statusCode).to.equal(400);
+          expect(response.text).to.eq(i18n.__('error.repeated_search_keywords'));
         });
       });
     });

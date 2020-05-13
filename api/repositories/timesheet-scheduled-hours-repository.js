@@ -16,6 +16,7 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
         timesheet_id,
       }
     });
+
     const CUMULATIVE_DURATION_QUERY = `
       SELECT id
       FROM(
