@@ -12,7 +12,7 @@
     "api": "api"
   },
   "scripts": {
-    "start": "node -r dotenv/config ./api/config/bin/www",
+    "start": "NODE_ENV=production node -r dotenv/config ./api/config/bin/www",
     "dev": "NODE_ENV=dev nodemon -r dotenv/config ./api/config/bin/www",
     "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha ./test/**/* --exit",
     "build-database": "./node_modules/sequelize-cli/lib/sequelize db:create && ./node_modules/sequelize-cli/lib/sequelize db:migrate && ./node_modules/sequelize-cli/lib/sequelize db:seed:all",
@@ -35,9 +35,13 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "google-auth-library": "^6.0.0",
+    "googleapis": "^50.0.0",
     "gulp": "^4.0.2",
     "houston-errors": "^1.1.0",
+    "i18n": "^0.9.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.25.3",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.3",
     "pg": "^8.1.0",

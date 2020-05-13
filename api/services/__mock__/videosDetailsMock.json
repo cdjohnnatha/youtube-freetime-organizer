@@ -1,0 +1,268 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "\"Dn5xIderbhAnUk5TAW0qkFFir0M/PMXskPcKDPoMpih8oNkY3Q7P20A\"",
+  "pageInfo": {
+   "totalResults": 4,
+   "resultsPerPage": 4
+  },
+  "items": [
+   {
+    "kind": "youtube#video",
+    "etag": "\"Dn5xIderbhAnUk5TAW0qkFFir0M/6BIavNYBkcUjeeX-4nEUHoeohRM\"",
+    "id": "F-5D-n91hMc",
+    "snippet": {
+     "publishedAt": "2018-09-04T17:38:12.000Z",
+     "channelId": "UCICWIYEx2mo4wYZzLwJ7wVw",
+     "title": "Best Practices for Setting up a large NodeJS Project",
+     "description": "In this video we will take a look at the best practices we can and should follow when setting up a mid to large project using NodeJS.",
+     "thumbnails": {
+      "default": {
+       "url": "https://i.ytimg.com/vi/F-5D-n91hMc/default.jpg",
+       "width": 120,
+       "height": 90
+      },
+      "medium": {
+       "url": "https://i.ytimg.com/vi/F-5D-n91hMc/mqdefault.jpg",
+       "width": 320,
+       "height": 180
+      },
+      "high": {
+       "url": "https://i.ytimg.com/vi/F-5D-n91hMc/hqdefault.jpg",
+       "width": 480,
+       "height": 360
+      }
+     },
+     "channelTitle": "Coding Blocks",
+     "tags": [
+      "nodejs",
+      "project structure",
+      "best practices",
+      "software development"
+     ],
+     "categoryId": "27",
+     "liveBroadcastContent": "none",
+     "localized": {
+      "title": "Best Practices for Setting up a large NodeJS Project",
+      "description": "In this video we will take a look at the best practices we can and should follow when setting up a mid to large project using NodeJS."
+     }
+    },
+    "contentDetails": {
+     "duration": "PT2H58M",
+     "dimension": "2d",
+     "definition": "hd",
+     "caption": "false",
+     "licensedContent": true,
+     "projection": "rectangular"
+    }
+   },
+   {
+    "kind": "youtube#video",
+    "etag": "\"Dn5xIderbhAnUk5TAW0qkFFir0M/Fuc__-YMIVsPoyntfeIf9FpmGVM\"",
+    "id": "fy6-LSE_zjI",
+    "snippet": {
+     "publishedAt": "2019-01-22T04:13:51.000Z",
+     "channelId": "UCE-SaKbJi9J9qIgBaSGfnfQ",
+     "title": "Designing a clean REST API with Node.js (Express + Mongo)",
+     "description": "We walk through the code of a REST API written in Node.js with Mongo and Express.js and talk about some design decisions and the application of several Architecture Principles including Separation of Concerns, designing for change, and more...\n\nsource code: https://github.com/arcdev1/mm_express_api_example",
+     "thumbnails": {
+      "default": {
+       "url": "https://i.ytimg.com/vi/fy6-LSE_zjI/default.jpg",
+       "width": 120,
+       "height": 90
+      },
+      "medium": {
+       "url": "https://i.ytimg.com/vi/fy6-LSE_zjI/mqdefault.jpg",
+       "width": 320,
+       "height": 180
+      },
+      "high": {
+       "url": "https://i.ytimg.com/vi/fy6-LSE_zjI/hqdefault.jpg",
+       "width": 480,
+       "height": 360
+      },
+      "standard": {
+       "url": "https://i.ytimg.com/vi/fy6-LSE_zjI/sddefault.jpg",
+       "width": 640,
+       "height": 480
+      },
+      "maxres": {
+       "url": "https://i.ytimg.com/vi/fy6-LSE_zjI/maxresdefault.jpg",
+       "width": 1280,
+       "height": 720
+      }
+     },
+     "channelTitle": "Dev Mastery",
+     "tags": [
+      "Node",
+      "Express",
+      "Mongo",
+      "MongoDB",
+      "ExpressJS",
+      "Node.js",
+      "NodeJS",
+      "express.js",
+      "separation of concerns",
+      "seperation of concerns",
+      "designing for change",
+      "javascript",
+      "JS",
+      "Architecture",
+      "API",
+      "CRUD",
+      "JSON",
+      "rest api",
+      "restful api",
+      "express api",
+      "nodejs express",
+      "express rest",
+      "dev mastery",
+      "devmastery",
+      "Bill Sourour",
+      "devmastery.com",
+      "rest api tutorial",
+      "express rest api",
+      "node api tutorial",
+      "rest tutorial",
+      "restful api tutorial"
+     ],
+     "categoryId": "28",
+     "liveBroadcastContent": "none",
+     "localized": {
+      "title": "Designing a clean REST API with Node.js (Express + Mongo)",
+      "description": "We walk through the code of a REST API written in Node.js with Mongo and Express.js and talk about some design decisions and the application of several Architecture Principles including Separation of Concerns, designing for change, and more...\n\nsource code: https://github.com/arcdev1/mm_express_api_example"
+     },
+     "defaultAudioLanguage": "en-CA"
+    },
+    "contentDetails": {
+     "duration": "PT38M31S",
+     "dimension": "2d",
+     "definition": "hd",
+     "caption": "false",
+     "licensedContent": true,
+     "projection": "rectangular"
+    }
+   },
+   {
+    "kind": "youtube#video",
+    "etag": "\"Dn5xIderbhAnUk5TAW0qkFFir0M/X9k5GdllQrQ9JC_hCbhE8-4OPYc\"",
+    "id": "-VP2VQ0DRbE",
+    "snippet": {
+     "publishedAt": "2016-05-19T08:16:09.000Z",
+     "channelId": "UCFqKaabXAsEX9IDvDvv7ipA",
+     "title": "NodeJS APIs Best Practices",
+     "description": "",
+     "thumbnails": {
+      "default": {
+       "url": "https://i.ytimg.com/vi/-VP2VQ0DRbE/default.jpg",
+       "width": 120,
+       "height": 90
+      },
+      "medium": {
+       "url": "https://i.ytimg.com/vi/-VP2VQ0DRbE/mqdefault.jpg",
+       "width": 320,
+       "height": 180
+      },
+      "high": {
+       "url": "https://i.ytimg.com/vi/-VP2VQ0DRbE/hqdefault.jpg",
+       "width": 480,
+       "height": 360
+      },
+      "standard": {
+       "url": "https://i.ytimg.com/vi/-VP2VQ0DRbE/sddefault.jpg",
+       "width": 640,
+       "height": 480
+      },
+      "maxres": {
+       "url": "https://i.ytimg.com/vi/-VP2VQ0DRbE/maxresdefault.jpg",
+       "width": 1280,
+       "height": 720
+      }
+     },
+     "channelTitle": "GigigoLabs",
+     "categoryId": "27",
+     "liveBroadcastContent": "none",
+     "localized": {
+      "title": "NodeJS APIs Best Practices",
+      "description": ""
+     }
+    },
+    "contentDetails": {
+     "duration": "PT44M49S",
+     "dimension": "2d",
+     "definition": "hd",
+     "caption": "false",
+     "licensedContent": false,
+     "projection": "rectangular"
+    }
+   },
+   {
+    "kind": "youtube#video",
+    "etag": "\"Dn5xIderbhAnUk5TAW0qkFFir0M/tLAZgtnRXdh-OSYhdoSi1tNbIUs\"",
+    "id": "9j03Jlo_dtA",
+    "snippet": {
+     "publishedAt": "2018-03-08T10:41:29.000Z",
+     "channelId": "UCuzKxtr3eB4hEtIdsX8tRCQ",
+     "title": "Late Night Docker: AMA Node.js Dockerfile Best Practices",
+     "description": "This video walks through a Node.js sample project for how to get the best out of Docker when doing node development. \n\nLate Night Docker is a YouTube Live series I'm doing on common Docker topics, unscripted and unedited.\n\nThis edition includes a Docker FAQ on Dockerfiles, Compose files, debugging, nodemon, npm package management, and more for Node.js. I recorded this to be edited down later, but thought a YouTube Live would be handy for those needing a better Node experience with Docker for development.\n\nSample Project: https://github.com/BretFisher/node-docker-good-defaults\n\nOrigional AMA: https://github.com/BretFisher/ama/issues/2\n\nMy Docker Newsletter, Udemy Course Coupons, and More: https://www.bretfisher.com",
+     "thumbnails": {
+      "default": {
+       "url": "https://i.ytimg.com/vi/9j03Jlo_dtA/default.jpg",
+       "width": 120,
+       "height": 90
+      },
+      "medium": {
+       "url": "https://i.ytimg.com/vi/9j03Jlo_dtA/mqdefault.jpg",
+       "width": 320,
+       "height": 180
+      },
+      "high": {
+       "url": "https://i.ytimg.com/vi/9j03Jlo_dtA/hqdefault.jpg",
+       "width": 480,
+       "height": 360
+      },
+      "standard": {
+       "url": "https://i.ytimg.com/vi/9j03Jlo_dtA/sddefault.jpg",
+       "width": 640,
+       "height": 480
+      },
+      "maxres": {
+       "url": "https://i.ytimg.com/vi/9j03Jlo_dtA/maxresdefault.jpg",
+       "width": 1280,
+       "height": 720
+      }
+     },
+     "channelTitle": "Bret Fisher",
+     "tags": [
+      "docker",
+      "docker-compose",
+      "node.js",
+      "npm",
+      "development",
+      "docker for mac",
+      "docker for windows",
+      "linux",
+      "containers",
+      "programming",
+      "javascript"
+     ],
+     "categoryId": "28",
+     "liveBroadcastContent": "none",
+     "defaultLanguage": "en",
+     "localized": {
+      "title": "Late Night Docker: AMA Node.js Dockerfile Best Practices",
+      "description": "This video walks through a Node.js sample project for how to get the best out of Docker when doing node development. \n\nLate Night Docker is a YouTube Live series I'm doing on common Docker topics, unscripted and unedited.\n\nThis edition includes a Docker FAQ on Dockerfiles, Compose files, debugging, nodemon, npm package management, and more for Node.js. I recorded this to be edited down later, but thought a YouTube Live would be handy for those needing a better Node experience with Docker for development.\n\nSample Project: https://github.com/BretFisher/node-docker-good-defaults\n\nOrigional AMA: https://github.com/BretFisher/ama/issues/2\n\nMy Docker Newsletter, Udemy Course Coupons, and More: https://www.bretfisher.com"
+     },
+     "defaultAudioLanguage": "en"
+    },
+    "contentDetails": {
+     "duration": "PT31M47S",
+     "dimension": "2d",
+     "definition": "hd",
+     "caption": "false",
+     "licensedContent": false,
+     "projection": "rectangular"
+    }
+   }
+  ]
+ }
+ 
