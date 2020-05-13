@@ -22,7 +22,15 @@ const normalize = (value = null) => {
 const formatYoutubeDuration = (duration) => moment
   .duration(duration).asMinutes().toFixed(2);
 
+const formatErrorMessage = (error) => {
+  if (error.errors) {
+    error.message = error.errors.join(','); 
+  }
+  return error.message;
+}
+
 module.exports = {
   normalize,
   formatYoutubeDuration,
+  formatErrorMessage,
 };

@@ -20,7 +20,7 @@ class VideoDurationHelper {
 
   _nextDay() {
     this._dayOfWeekIndex += 1;
-    if (this._dayOfWeekIndex > 6) {
+    if (this._dayOfWeekIndex > 7) {
       this._dayOfWeekIndex = 0;
     }
     this._totalDaysToWatchVideoList += 1;
