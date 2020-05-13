@@ -1,6 +1,11 @@
-const { Timesheets, TimesheetScheduleHours, TimesheetVideos, sequelize } = require('../db/models');
+const {
+  Timesheets,
+  TimesheetScheduleHours,
+  sequelize,
+} = require('../db/models');
 const VideoService = require('../services/video-services');
-
+const WeekDayHelper = require('../helpers/week-day-helpers');
+const { getAvailableVideosForTodayRepository } = require('../repositories/timesheet-scheduled-hours-repository');
 /**
  * 
  * @param {Object} params
@@ -46,16 +51,20 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
     const videoDetails = await searchVideos.buildVideosDetailsFromIds(timesheet.dataValues.id);
     videoDetails.buildTotalDaysNeededToWatchVideoList();
 
-    let savingTimesheetVideos = videoDetails.saveTimesheetVideos(transaction);
+    const savingTimesheetVideos = videoDetails.saveTimesheetVideos(transaction);
 
-    let updateTimesheetPromise = timesheet.update({
+    const updateTimesheetResult = timesheet.update({
       total_days_complete_videos_list: videoDetails.totalDaysNeededToWatchVideoList
     }, { transaction });
-    
-    await Promise.all([savingTimesheetVideos, updateTimesheetPromise]);
+
+    await Promise.all([savingTimesheetVideos, updateTimesheetResult]);
+
     await transaction.commit();
+    timesheet.dataValues.timesheet_schedule_hours = await getAvailableVideosForTodayRepository(timesheet.dataValues.id);
+  
     return timesheet;
   } catch (error) {
+    console.log('[error]', error);
     await transaction.rollback();
     throw error;
   }
