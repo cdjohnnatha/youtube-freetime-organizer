@@ -17,11 +17,9 @@ module.exports = (db) => {
         highest_freetime_minutes_of_week = time;
       };
       available_minute_today = {
-        day_of_week: `${weekDayHelper.weekDay}`,
+        day_of_week: WEEK_DAYS_ENUM[index],
         available_minutes: time,
       };
-
-      weekDayHelper.nextDay();
 
       return available_minute_today;
     });

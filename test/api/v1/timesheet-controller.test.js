@@ -7,11 +7,13 @@ const Factory = require('../../factory');
 const { shouldBehaveLikeTimesheet } = require('../../support/shared-examples/timesheet-shared-examples')
 const { shouldBehaveLikeTimesheetScheduledhours } = require('../../support/shared-examples/timesheet-scheduled-hours-shared-examples')
 const { shouldBehaveLikeTimesheetVideosList } = require('../../support/shared-examples/timesheet-videos-shared-examples')
+const i18n = require('../../../api/config/i18n');
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
 const timesheetsBaseRoute = `${baseApiV1Routes}users/timesheets`;
+const availableVideosBaseRoute = `${baseApiV1Routes}users/timesheets/available-videos`;
 
 let authToken = null;
 let timesheetParams = null;
@@ -21,7 +23,6 @@ const WeekDayHelpers = require('../../../api/helpers/week-day-helpers');
 describe('Users-controller', () => {
   after(async () => {
     await Factory.cleanUp('Users');
-    await Factory.cleanUp('Auth');
   });
   before(async () => {
     const user = await Factory.create('Users', {}, { with_auth: true });
@@ -31,6 +32,7 @@ describe('Users-controller', () => {
       chai,
     });
   });
+
   describe('Create timesheet', () => {
     beforeEach(async () => {
       ({ dataValues: timesheetParams } = await Factory.build('Timesheets'));
@@ -101,6 +103,44 @@ describe('Users-controller', () => {
             .send(params);
           expect(response.statusCode).to.equal(400);
         });
+        it('create twice timesheet with same search_keywords should return error', async () => {
+          const params = { ...timesheetParams };
+          let response = await chai
+            .request(app)
+            .post(timesheetsBaseRoute)
+            .set('Authorization', authToken)
+            .send(params);
+          expect(response.statusCode).to.equal(201);
+          response = await chai
+            .request(app)
+            .post(timesheetsBaseRoute)
+            .set('Authorization', authToken)
+            .send(params);
+          expect(response.statusCode).to.equal(400);
+          expect(response.text).to.eq(i18n.__('error.repeated_search_keywords'));
+        });
+      });
+    });
+  });
+
+  describe('Get available videos in a day', () => {
+    describe('With right params', () => {
+      it('get available videos from timesheet resource should return a scheduled hours and a list of available videos for that day', async () => {
+        let response = await chai
+          .request(app)
+          .get(availableVideosBaseRoute)
+          .set('Authorization', authToken);
+        expect(response.statusCode).to.equal(200);
+        shouldBehaveLikeTimesheetScheduledhours(response.body);
+        shouldBehaveLikeTimesheetVideosList(response.body.timesheet_videos);
+      });
+    });
+    describe('With wrong params', () => {
+      it('Without token should return an error', async () => {
+        let response = await chai
+          .request(app)
+          .get(availableVideosBaseRoute);
+        expect(response.statusCode).to.equal(401);
       });
     });
   });

@@ -1,5 +1,7 @@
 {
   "error": {
-    "invalid_sign_in": "Invalid email or password" 
-  }
+    "invalid_sign_in": "Invalid email or password", 
+    "repeated_search_keywords": "It already exists an incompleted timesheet with the same keywords" 
+  },
+  "empty_in_progress_timesheet": "It was not found any in progress timesheet."
 }

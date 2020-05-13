@@ -32,13 +32,13 @@ module.exports = {
   status: {
     type: ENUM,
     values: ['IN_PROGRESS', 'COMPLETED'],
-    default: 'IN_PROGRESS',
-    allowNull: false,
+    defaultValue: 'IN_PROGRESS',
+    allowNull: true,
   },
   total_days_complete_videos_list: {
     type: INTEGER,
     allowNull: true,
-    default: 0,
+    defaultValue: 0,
   },
   createdAt: {
     type: DATE,

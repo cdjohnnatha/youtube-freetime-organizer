@@ -19,7 +19,7 @@ module.exports = {
   image_quality_type: {
     type: ENUM,
     values: ['default', 'medium', 'high', 'standard', 'maxres'],
-    default: 'default',
+    defaultValue: 'default',
     allowNull: false,
   },
   url: {
