@@ -16,7 +16,7 @@
     "dev": "NODE_ENV=dev nodemon -r dotenv/config ./api/config/bin/www",
     "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha ./test/**/* --exit",
     "build-database": "./node_modules/sequelize-cli/lib/sequelize db:create && ./node_modules/sequelize-cli/lib/sequelize db:migrate && ./node_modules/sequelize-cli/lib/sequelize db:seed:all",
-    "database-migration": "./node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "database-migration": "NODE_ENV=production ./node_modules/sequelize-cli/lib/sequelize db:migrate",
     "swagger-json": "./node_modules/gulp/bin/gulp.js swagger"
   },
   "repository": {
