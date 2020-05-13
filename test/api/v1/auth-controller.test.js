@@ -24,6 +24,7 @@ let auth_provider = null;
 describe('Users-controller', () => {
   after(async () => {
     await Factory.cleanUp('Users');
+    await Factory.cleanUp('Auth');
   });
   describe('Register user', () => {
     beforeEach(async () => {
@@ -104,6 +105,10 @@ describe('Users-controller', () => {
   });
 
   describe('SignIn user', () => {
+    after(async () => {
+      await Factory.cleanUp('Users');
+      await Factory.cleanUp('Auth');
+    });
     before(async () => {
       user = await Factory.create('Users', {}, { with_auth: true });
       auth_provider = {

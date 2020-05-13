@@ -75,8 +75,6 @@ class VideoService {
   }
 
   _buildVideoDetails(items, timesheet_id) {
-    console.log('\n\n[_buildVideoDetails]');
-    console.log('[_buildVideoDetails]', timesheet_id);
     if (Array.isArray(items) && items.length > 0) {
       let duration = null;
       let timesheet_video_thumbnails = [];
@@ -177,7 +175,6 @@ class VideoService {
     } else {
       itemsList = videoDetailsMock.items;
     }
-    console.log('[itemsList]', timesheet_id);
     this._buildVideoDetails(itemsList, timesheet_id);
     return this;
   }
