@@ -1,9 +1,7 @@
 const TimesheetDataTypes = require('./data-types/timesheets/timesheets-data-types');
-const ModelSettings = require('../model-settings');
 
 module.exports = (db) => {
   const Timesheet = db.define('Timesheets', TimesheetDataTypes, {
-    ...ModelSettings,
     tableName: 'timesheets',
   });
 

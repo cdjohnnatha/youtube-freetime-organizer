@@ -1,9 +1,7 @@
 const TimesheetVideosDataTypes = require('./data-types/timesheets/videos/timesheet-videos-data-types');
-const ModelSettings = require('../model-settings');
 
 module.exports = (db) => {
   const TimesheetVideo = db.define('TimesheetVideos', TimesheetVideosDataTypes, {
-    ...ModelSettings,
     tableName: 'timesheet_videos',
   });
 

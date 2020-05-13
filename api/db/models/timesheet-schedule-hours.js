@@ -1,11 +1,9 @@
 const TimesheetScheduleHoursDataTypes = require('./data-types/timesheets/timesheet-schedule-hours-data-types');
-const ModelSettings = require('../model-settings');
 const { WEEK_DAYS_ENUM } = require('../../utils/const-utils');
 const WeekDayHelpers = require('../../helpers/week-day-helpers')
 
 module.exports = (db) => {
   const TimesheetScheduleHour = db.define('TimesheetScheduleHours', TimesheetScheduleHoursDataTypes, {
-    ...ModelSettings,
     tableName: 'timesheet_schedule_hours',
   });
 
@@ -18,7 +16,6 @@ module.exports = (db) => {
       if (time > highest_freetime_minutes_of_week) {
         highest_freetime_minutes_of_week = time;
       };
-      console.log('[weekDayHelper.weekDay]', weekDayHelper.weekDay);
       available_minute_today = {
         day_of_week: `${weekDayHelper.weekDay}`,
         available_minutes: time,

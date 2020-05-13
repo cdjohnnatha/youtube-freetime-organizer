@@ -1,10 +1,8 @@
 const UsersDataTypes = require('./data-types/users-data-types');
-const ModelSettings = require('../model-settings');
 const { normalize } = require('../../helpers/formatter-helpers');
 
 module.exports = (db) => {
   const User = db.define('Users', UsersDataTypes, {
-    ...ModelSettings,
     tableName: 'users',
     hooks: {
       beforeCreate: ({ dataValues }, _options) => {
