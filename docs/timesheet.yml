@@ -24,3 +24,22 @@
           description: "Bad Request"
         401:
           description: "Unauthorized"
+  /v1/users/timesheets/available-videos:
+    get:
+      tags:
+      - "Timesheets"
+      security:
+      - auth: []
+      summary: "get available videos for today"
+      operationId: "getAvailableVideos"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AvailableVideos"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"

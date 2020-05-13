@@ -73,12 +73,28 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
     // console.log('[timesheet]', timesheet);
     return timesheet;
   } catch (error) {
-    console.log('error', error);
     if (transaction) await transaction.rollback();
     throw error;
   }
+};
+
+const getTimesheetFromUserRespository = async (user_id) => {
+  try {
+    const timesheet = await Timesheets.findOne({
+      where: {
+        user_id,
+        status: 'IN_PROGRESS'
+      },
+      raw: true,
+    });
+    return timesheet;
+  } catch (error) {
+    throw error;
+  }
+
 }
 
 module.exports = {
   createTimesheetRepository,
+  getTimesheetFromUserRespository
 };
