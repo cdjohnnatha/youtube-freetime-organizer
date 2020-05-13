@@ -1,11 +1,9 @@
 const bcrypt = require('bcrypt');
 
 const AuthDataTypes = require('./data-types/auth-data-types');
-const ModelSettings = require('../model-settings');
 
 module.exports = (db) => {
   const Auth = db.define('Auth', AuthDataTypes, {
-    ...ModelSettings,
     tableName: 'auth',
     hooks: {
       beforeCreate: ({ dataValues }, _options) => {

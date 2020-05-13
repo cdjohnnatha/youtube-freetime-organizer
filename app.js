@@ -5,8 +5,12 @@ const logger = require('morgan');
 const cors = require('cors')
 
 const routes = require('./api/config/routes');
+const i18n = require('./api/config/i18n');
 
 const app = express();
+
+
+app.use(i18n.init);
 
 app.use(cors());
 app.use(logger('dev'));

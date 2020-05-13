@@ -1,7 +1,7 @@
 const { internet } = require('faker');
 const { Auth } = require('../../api/db/models');
 
-const ResellerFactory = (factory) => {
+const AuthFactory = (factory) => {
   factory.define(
     'Auth',
     Auth,
@@ -12,4 +12,4 @@ const ResellerFactory = (factory) => {
   );
 };
 
-module.exports = ResellerFactory;
+module.exports = AuthFactory;
