@@ -1,7 +1,7 @@
 {
   "name": "youtube-freetime-organizer",
   "description": "This application is used to register and organize your freetime in a manner to watch youtube videos. ",
-  "version": "0.0.0",
+  "version": "0.0.10",
   "private": true,
   "author": "claudio djohnnatha duarte lourenco",
   "license": "MIT",
