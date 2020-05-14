@@ -16,8 +16,6 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
       }
     });
 
-    console.log('[videosIds]', timesheetVideosResult.dataValues.available_minutes);
-
 
     const CUMULATIVE_DURATION_QUERY = `
       SELECT id
@@ -50,7 +48,6 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
         }
       ]
     });
-    console.log('[videosIds]', timesheetVideosResult);
     return timesheetVideosResult;
   } catch (error) {
     throw error;

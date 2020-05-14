@@ -40,6 +40,14 @@ describe('Users-controller', () => {
     })
     describe('Authenticated user', () => {
       describe('with right params', () => {
+        beforeEach(async () => {
+          const user = await Factory.create('Users', {}, { with_auth: true });
+          authToken = await getBearerTokenFromAuthentication({
+            email: user.dataValues.auth.email,
+            app,
+            chai,
+          });
+        });
         it('It should create a timesheet with scheduled hours and videos to be watched', async () => {
           const response = await chai
             .request(app)
@@ -103,21 +111,15 @@ describe('Users-controller', () => {
             .send(params);
           expect(response.statusCode).to.equal(400);
         });
-        it('create twice timesheet with same search_keywords should return error', async () => {
+        it('create twice timesheet should return error', async () => {
           const params = { ...timesheetParams };
-          let response = await chai
-            .request(app)
-            .post(timesheetsBaseRoute)
-            .set('Authorization', authToken)
-            .send(params);
-          expect(response.statusCode).to.equal(201);
           response = await chai
             .request(app)
             .post(timesheetsBaseRoute)
             .set('Authorization', authToken)
             .send(params);
-          expect(response.statusCode).to.equal(400);
-          expect(response.text).to.eq(i18n.__('error.repeated_search_keywords'));
+          expect(response.statusCode).to.equal(406);
+          expect(response.text).to.eq(i18n.__('error.only_one_timesheet_in_progress'));
         });
       });
     });

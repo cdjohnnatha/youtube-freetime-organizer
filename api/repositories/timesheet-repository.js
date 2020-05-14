@@ -65,12 +65,9 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
       total_days_complete_videos_list: videoDetails.totalDaysNeededToWatchVideoList
     }, { transaction });
 
-    // await Promise.all([savingTimesheetVideos, updateTimesheetResult]);
-
     await transaction.commit();
     timesheet.dataValues.timesheet_schedule_hours = await getAvailableVideosForTodayRepository(timesheet.dataValues.id);
     transaction = null;
-    // console.log('[timesheet]', timesheet);
     return timesheet;
   } catch (error) {
     if (transaction) await transaction.rollback();

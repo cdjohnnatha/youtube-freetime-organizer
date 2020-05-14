@@ -52,8 +52,8 @@ describe('Users-controller', () => {
         userParams.last_name = `!@#$%^&*()${lastName}`;
         const response = await chai.request(app).post(signUpBaseRoute).send(userParams);
         expect(response.statusCode).to.equal(201);
-        expect(response.body.first_name).to.be.eq(firstName);
-        expect(response.body.last_name).to.be.eq(lastName);
+        expect(response.body.user.first_name).to.be.eq(firstName);
+        expect(response.body.user.last_name).to.be.eq(lastName);
       });
     });
     describe('with wrong params', () => {
