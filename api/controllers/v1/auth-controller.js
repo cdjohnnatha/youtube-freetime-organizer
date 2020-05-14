@@ -13,8 +13,7 @@ const signUpController = async ({ body }, response) => {
       await signupSchema.validate(body);
       const user = await createUserRepository(body);
       logger.systemLogLevel({ body: user.dataValues, function: 'signUpController' });
-      user.dataValues.token = 
-      response.status(201).send(user);
+      response.status(201).send({ user: user.dataValues });
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
     response.status(BAD_REQUEST.code).send(error);
@@ -34,13 +33,13 @@ const authEmailProviderController = async ({ body, ...props }, response) => {
             {
               model: Users,
               as: 'users',
-              attributes: ['id'],
+              attributes: ['id', 'first_name', 'last_name'],
             },
           ]
         });
         logger.systemLogLevel({ meta: { auth, function: 'authEmailProvider' } });
         const jwt = await generateJWT({ user_id: auth.dataValues.users.id });
-        response.status(200).send(jwt);
+        response.status(200).send({ ...jwt, user: auth.dataValues.users });
       } else {
         response.status(BAD_REQUEST.code).send(i18n.__('error.invalid_sign_in'));
       }

@@ -1,7 +1,10 @@
 {
   "error": {
     "invalid_sign_in": "Invalid email or password", 
-    "repeated_search_keywords": "It already exists an incompleted timesheet with the same keywords" 
+    "repeated_search_keywords": "It already exists an incompleted timesheet with the same keywords", 
+    "empty_timesheet_video_id": "It it necessary to send empty_timesheet_video_id to be able to set as watched", 
+    "only_one_timesheet_in_progress": "It it allowed only one timesheet in progress, finish that one first",
+    "timesheet_video_not_found": "Timesheet video not found" 
   },
   "empty_in_progress_timesheet": "It was not found any in progress timesheet."
 }

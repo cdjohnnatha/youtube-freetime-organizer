@@ -91,10 +91,25 @@ const getTimesheetFromUserRespository = async (user_id) => {
   } catch (error) {
     throw error;
   }
+}
 
+const hasTimesheetInProgress = async (user_id) => {
+  try {
+    const timesheet = await Timesheets.count({
+      where: {
+        user_id,
+        status: 'IN_PROGRESS'
+      },
+      raw: true,
+    });
+    return timesheet;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
   createTimesheetRepository,
-  getTimesheetFromUserRespository
+  getTimesheetFromUserRespository,
+  hasTimesheetInProgress
 };
