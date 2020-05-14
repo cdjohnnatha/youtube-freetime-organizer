@@ -20,10 +20,12 @@ const createTimesheetController = async ({ body, meta }, res) => {
     await timesheetSchema.validate(body);
     body.user_id = meta.user_id;
     const hasTimesheet = await hasTimesheetInProgress(meta.user_id);
+    logger.systemLogLevel({ meta: { hasTimesheet } });
     if (hasTimesheet > 0) {
       res.status(406).send(i18n.__('error.only_one_timesheet_in_progress'));
     } else {
       const timesheet = await createTimesheetRepository(body);
+      logger.systemLogLevel({ meta: { timesheet } });
       res.status(201).send(timesheet);
     }
   } catch (error) {
@@ -39,6 +41,7 @@ const availableVideosController = async ({ body, meta }, res) => {
       res.status(200).send(i18n.__('empty_in_progress_timesheet'));
     } else {
       const availableVideos = await getAvailableVideosForTodayRepository(timesheet.id);
+      logger.systemLogLevel({ meta: { availableVideos } });
       res.status(200).send(availableVideos);
     }
   } catch (error) {
@@ -51,6 +54,7 @@ const setVideoAsWatchedController = async ({ params, meta }, res) => {
   try {
     const { id } = params;
     const watchedVideo = await setVideoAsWatchedRepository(meta.user_id, id);
+    logger.systemLogLevel({ meta: { watchedVideo } });
     res.status(200).send(watchedVideo);
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
@@ -61,6 +65,7 @@ const setVideoAsWatchedController = async ({ params, meta }, res) => {
 const timesheetInProgressController = async ({ meta }, res) => {
   try {
     const inProgressTimesheet = await getInProgressTimesheetRepository(meta.user_id);
+    logger.systemLogLevel({ meta: { inProgressTimesheet } });
     res.status(200).send(inProgressTimesheet);
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });

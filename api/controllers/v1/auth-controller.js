@@ -12,7 +12,7 @@ const signUpController = async ({ body }, response) => {
   try {
       await signupSchema.validate(body);
       const user = await createUserRepository(body);
-      logger.systemLogLevel({ body: user.dataValues, function: 'signUpController' });
+      logger.systemLogLevel({ body: user.dataValues, functionName: 'signUpController' });
       response.status(201).send({ user: user.dataValues });
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
@@ -37,7 +37,7 @@ const authEmailProviderController = async ({ body, ...props }, response) => {
             },
           ]
         });
-        logger.systemLogLevel({ meta: { auth, function: 'authEmailProvider' } });
+        logger.systemLogLevel({ meta: { auth }, functionName: 'authEmailProvider' });
         const jwt = await generateJWT({ user_id: auth.dataValues.users.id });
         response.status(200).send({ ...jwt, user: auth.dataValues.users });
       } else {

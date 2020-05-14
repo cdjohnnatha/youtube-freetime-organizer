@@ -56,7 +56,13 @@ if (isDevelopmentEnviroment) {
  * @param {type} param.level - Level log, it will be considered debug as default.
  */
 logger.systemLogLevel = async (
-  { error = null, meta = {}, level = 'debug', message = null },
+  {
+    error = null,
+    functionName = '',
+    meta = {},
+    level = 'debug',
+    message = null
+  },
   context
 ) => {
   try {
@@ -75,6 +81,7 @@ logger.systemLogLevel = async (
           logger[level]({
             message,
             meta,
+            functionName,
           });
         })
       );
@@ -85,7 +92,7 @@ logger.systemLogLevel = async (
         logger.customError({
           error,
           meta: {
-            function: 'logger.systemDebug',
+            functionName: 'logger.systemDebug',
           },
         });
       })

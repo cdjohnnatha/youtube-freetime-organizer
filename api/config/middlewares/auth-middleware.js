@@ -42,7 +42,7 @@ const authorizationMiddleware = async (request, response, next) => {
       error,
       level: 'error',
       meta: {
-        function: 'authorizationMiddleware',
+        functionName: 'authorizationMiddleware',
         additional_message: 'API Authorization route',
       },
     });

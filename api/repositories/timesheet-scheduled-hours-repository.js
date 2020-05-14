@@ -5,6 +5,7 @@ const {
   sequelize,
 } = require('../db/models');
 const WeekDayHelper = require('../helpers/week-day-helpers');
+const logger = require('../config/logger');
 
 const getAvailableVideosForTodayRepository = async (timesheet_id) => {
   try {
@@ -15,7 +16,12 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
         timesheet_id,
       }
     });
-
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        timesheetVideosResult,
+      },
+    });
 
     const CUMULATIVE_DURATION_QUERY = `
       SELECT id
@@ -36,7 +42,19 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
     `;
 
     const [, videosIds] = await sequelize.query(CUMULATIVE_DURATION_QUERY);
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        videosIds,
+      },
+    });
     const videosToBeWatchedIds = videosIds.rows.map(({ id }) => id);
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        videosToBeWatchedIds,
+      },
+    });
     timesheetVideosResult.dataValues.timesheet_videos = await TimesheetVideos.findAll({
       where: {
         id: videosToBeWatchedIds,
@@ -47,6 +65,12 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
           as: 'timesheet_video_thumbnails'
         }
       ]
+    });
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        timesheetVideosResult: timesheetVideosResult.dataValues,
+      },
     });
     return timesheetVideosResult;
   } catch (error) {

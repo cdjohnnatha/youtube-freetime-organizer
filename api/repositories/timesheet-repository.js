@@ -7,7 +7,7 @@ const VideoService = require('../services/video-services');
 const WeekDayHelper = require('../helpers/week-day-helpers');
 const { getAvailableVideosForTodayRepository } = require('../repositories/timesheet-scheduled-hours-repository');
 const i18n = require('i18n');
-
+const logger = require('../config/logger');
 /**
  * 
  * @param {Object} params
@@ -26,6 +26,10 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
         search_keywords: params.search_keywords,
       },
     });
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: { timesheet },
+    });
     if (timesheet) {
       throw new Error(i18n.__('error.repeated_search_keywords'));
     }
@@ -34,7 +38,13 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
       highest_freetime_minutes_of_week,
       timesheet_schedule_hours,
     } = TimesheetScheduleHours.buildByAvailableMinutesArray(available_minutes_per_day);
-
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        highest_freetime_minutes_of_week,
+        timesheet_schedule_hours,
+      }
+    });
     let videoService = new VideoService({
       searchKeywords: params.search_keywords,
       highestAvailableMinutesTime: highest_freetime_minutes_of_week,
@@ -53,6 +63,12 @@ const createTimesheetRepository = async ({ available_minutes_per_day, ...params 
           as: 'timesheet_schedule_hours',
         }
       ],
+    });
+    logger.systemLogLevel({
+      functionName: 'getAvailableVideosForTodayRepository',
+      meta: {
+        timesheet
+      }
     });
     ([searchVideos, timesheet] = await Promise.all([searchVideos, timesheet]))
     if (Array.isArray(timesheet)) timesheet = timesheet[0];

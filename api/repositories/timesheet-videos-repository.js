@@ -22,8 +22,21 @@ const setVideoAsWatchedRepository = async (user_id, timesheetVideoId) => {
     if (!timesheetVideoWatched) {
       throw new Error('Timesheet video not found');
     }
+    logger.systemLogLevel({
+      functionName: 'setVideoAsWatchedRepository',
+      meta: {
+        timesheetVideoWatched: timesheetVideoWatched.dataValues,
+      },
+    });
     const updateResult = await timesheetVideoWatched.update({
       watchedAt: moment(),
+    });
+
+    logger.systemLogLevel({
+      functionName: 'setVideoAsWatchedRepository',
+      meta: {
+        updateResult: updateResult,
+      },
     });
 
     const isInProgressYet = await TimesheetVideos.count({
@@ -40,9 +53,21 @@ const setVideoAsWatchedRepository = async (user_id, timesheetVideoId) => {
         }
       ],
     });
+    logger.systemLogLevel({
+      functionName: 'setVideoAsWatchedRepository',
+      meta: {
+        isInProgressYet: isInProgressYet.dataValues,
+      },
+    });
 
     if (!isInProgressYet) {
-      await Timesheets.update({ status: 'COMPLETED' }, { where: { user_id } });
+      const completeStateTimesheert = await Timesheets.update({ status: 'COMPLETED' }, { where: { user_id } });
+      logger.systemLogLevel({
+        functionName: 'setVideoAsWatchedRepository',
+        meta: {
+          completeStateTimesheert,
+        },
+      });
     }
 
     return updateResult;

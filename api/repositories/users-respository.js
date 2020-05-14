@@ -8,10 +8,10 @@ const createUserRepository = async (params) => {
       {
         include: [{ model: Auth, as: 'auth_provider' }]
       });
-    logger.systemLogLevel({ body: user.dataValues, function: 'createUser' });
+    logger.systemLogLevel({ meta: { body: user.dataValues }, function: 'createUser' });
     return user;
   } catch (error) {
-    logger.systemLogLevel({ error, level: 'error', meta: { function: 'createUser' } });
+    logger.systemLogLevel({ error, level: 'error', function: 'createUser' });
     throw error;
   }
 };
