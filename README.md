@@ -93,6 +93,27 @@ The database initialization it will pretty much create the database, run the mig
   npm run build-database
 ```
 
+## 6. 📄 <a name='Swagger'></a>Swagger
+
+You can take a look in everything which has in the api by swagger.
+
+To generate the most updated swagger.json file at public folder you need to run the command:
+
+```
+  npm run swagger-json
+```
+
+You must have installed Docker and you can use the command:
+
+```
+  make swaggerui
+```
+
+You can access the swagger-ui from http://localhost:8085
+
+
+![picture](public/images/swagger-youtube-freetime-organizer.png)
+
 ## 7. 📄 <a name='Tests'></a>Tests
 
 You can run the applications tests with
