@@ -125,6 +125,5 @@ const getInProgressTimesheetRepository = async (user_id) => {
 module.exports = {
   createTimesheetRepository,
   getTimesheetFromUserRespository,
-  // hasTimesheetInProgress,
   getInProgressTimesheetRepository,
 };

@@ -38,7 +38,6 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
     `;
 
     const [, videosIds] = await sequelize.query(CUMULATIVE_DURATION_QUERY);
-    console.log('[videosIds]', videosIds);
     const videosToBeWatchedIds = videosIds.rows.map(({ id }) => id);
     timesheetVideosResult.dataValues.timesheet_videos = await TimesheetVideos.findAll({
       where: {
@@ -51,6 +50,7 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
         }
       ]
     });
+    console.log('[videosIds]', timesheetVideosResult);
     return timesheetVideosResult;
   } catch (error) {
     throw error;
