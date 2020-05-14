@@ -7,6 +7,7 @@ const {
   getInProgressTimesheetRepository,
 } = require('../../repositories/timesheet-repository');
 const { getAvailableVideosForTodayRepository } = require('../../repositories/timesheet-scheduled-hours-repository');
+const { setVideoAsWatchedRepository } = require('../../repositories/timesheet-videos-repository');
 const { timesheetSchema } = require('./schemas/timesheet-schemas');
 const logger = require('../../config/logger');
 const { formatErrorMessage } = require('../../helpers/formatter-helpers');
@@ -18,8 +19,13 @@ const createTimesheetController = async ({ body, meta }, res) => {
   try {
     await timesheetSchema.validate(body);
     body.user_id = meta.user_id;
-    const timesheet = await createTimesheetRepository(body);
-    res.status(201).send(timesheet);
+    const hasTimesheet = await hasTimesheetInProgress(meta.user_id);
+    if (hasTimesheet > 0) {
+      res.status(406).send(i18n.__('error.only_one_timesheet_in_progress'));
+    } else {
+      const timesheet = await createTimesheetRepository(body);
+      res.status(201).send(timesheet);
+    }
   } catch (error) {
     logger.systemLogLevel({ error, level: 'error' });
     res.status(BAD_REQUEST.code).send(formatErrorMessage(error));

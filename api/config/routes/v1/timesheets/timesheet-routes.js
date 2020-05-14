@@ -10,5 +10,6 @@ const {
 router.post('/', createTimesheetController);
 router.get('/', timesheetInProgressController);
 router.get('/available-videos', availableVideosController);
+router.get('/videos/:id', setVideoAsWatchedController);
 
 module.exports = router;
