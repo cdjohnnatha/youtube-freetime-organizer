@@ -73,6 +73,7 @@ logger.systemLogLevel = async (
     meta.error = error;
     if (error && !message) {
       message = error.message;
+      meta.errorStack = error.stack;
     }
 
     if (process.env.LOGGER_ON_TESTS) {

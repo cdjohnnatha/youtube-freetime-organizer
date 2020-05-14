@@ -4,6 +4,7 @@
 ## Table of Contents
 
 <!-- vscode-markdown-toc -->
+0. [Requirements](#Requirements)
 1. [Intro](#Intro)
 2. [Challenge](#Intro)
 3. [Installation](#Installation)
@@ -16,6 +17,12 @@
 7. [Tests](#Tests)
 8. [License](#License)
 
+
+## 0. <a name='Requirements'></a>Requirements
+
+Before of all take a look at .env.sample file which contains the necessary keys for the application works properly.
+
+Create a file name .env and set the keys from .env.sample.
 
 ## 1. <a name='Intro'></a>Intro
 
@@ -46,6 +53,31 @@ The youtube-freetime-organizer is an api used to organize the freetime that can 
 
 ```
     docker-compose up
+```
+
+## 4. 📖 <a name='Usage'></a>Usage
+
+At very first beginning it is necessary to create a .env file to the application work properly. 
+
+You can take a look at .env.sample where you will find the keys necessary to run the project.
+
+The integration with youtube it might work only on production mode, but it is necessary a key for it at .env called YOUTUBE_SECRET_KEY.
+
+You can control how many videos you want to be considered in a searching setting the key: MAX_ITEMS_VIDEO_SEARCH.
+
+It is required to set the database configurations as well and you can run an instance of PostgreSQL from docker changing few parameters at makefile.
+
+To run the production mode just:
+```
+    npm start
+```
+
+You can also teste the application in dev mode which a mock file with the same response structure from youtube, where it was used the keywords for search: 'best practices nodejs'.
+
+You can run a dev mode as bellow:
+
+```
+    npm run dev
 ```
 
 ## 5. 📖 <a name='Database'></a>Database

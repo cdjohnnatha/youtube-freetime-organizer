@@ -2,6 +2,7 @@ const moment = require('moment');
 const i18n = require('i18n');
 
 const { TimesheetVideos, Timesheets, sequelize } = require('../db/models');
+const logger = require('../config/logger');
 
 const setVideoAsWatchedRepository = async (user_id, timesheetVideoId) => {
   try {
