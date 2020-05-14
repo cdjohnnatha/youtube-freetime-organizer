@@ -93,8 +93,38 @@ const getTimesheetFromUserRespository = async (user_id) => {
   }
 
 }
+const getInProgressTimesheetRepository = async (user_id) => {
+  try {
+    const timesheet = await Timesheets.findOne({
+      attributes: [
+        'name',
+        'description',
+        'search_keywords',
+        'status',
+        'total_days_complete_videos_list',
+        'created_at'
+      ],
+      where: {
+        user_id,
+        status: 'IN_PROGRESS'
+      },
+      include: [
+        {
+          model: TimesheetScheduleHours,
+          as: 'timesheet_schedule_hours',
+          attributes: ['day_of_week', 'available_minutes']
+        },
+      ]
+    });
+    return timesheet;
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createTimesheetRepository,
-  getTimesheetFromUserRespository
+  getTimesheetFromUserRespository,
+  // hasTimesheetInProgress,
+  getInProgressTimesheetRepository,
 };

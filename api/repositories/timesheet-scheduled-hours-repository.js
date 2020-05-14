@@ -4,7 +4,6 @@ const {
   TimesheetVideoThumbnails,
   sequelize,
 } = require('../db/models');
-const VideoService = require('../services/video-services');
 const WeekDayHelper = require('../helpers/week-day-helpers');
 
 const getAvailableVideosForTodayRepository = async (timesheet_id) => {
@@ -17,6 +16,9 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
       }
     });
 
+    console.log('[videosIds]', timesheetVideosResult.dataValues.available_minutes);
+
+
     const CUMULATIVE_DURATION_QUERY = `
       SELECT id
       FROM(
@@ -28,15 +30,15 @@ const getAvailableVideosForTodayRepository = async (timesheet_id) => {
           created_at,
           sum(duration) OVER(order by id, created_at) as cumulativeDuration
                         FROM timesheet_videos
+                        WHERE timesheet_id = ${timesheet_id}
         ) AS cumulative
               WHERE watched_at IS NULL
-                and cumulative.cumulativeDuration < ${timesheetVideosResult.dataValues.available_minutes}
-                and timesheet_id = ${timesheet_id}
+                and cumulative.cumulativeDuration <= ${timesheetVideosResult.dataValues.available_minutes}
       ) as videosAvailable
-    
     `;
 
     const [, videosIds] = await sequelize.query(CUMULATIVE_DURATION_QUERY);
+    console.log('[videosIds]', videosIds);
     const videosToBeWatchedIds = videosIds.rows.map(({ id }) => id);
     timesheetVideosResult.dataValues.timesheet_videos = await TimesheetVideos.findAll({
       where: {

@@ -101,6 +101,24 @@ paths:
           description: "Bad Request"
         401:
           description: "Unauthorized"
+    get:
+      tags:
+      - "Timesheets"
+      security:
+      - auth: []
+      summary: "get in progress timesheet"
+      operationId: "getInProgressTimesheet"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InProgressTimesheet"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
   /v1/users/timesheets/available-videos:
     get:
       tags:
@@ -279,6 +297,31 @@ definitions:
         items:
           $ref: "#/definitions/TimesheetVideos"
     type: object
+  InProgressTimesheetScheduleHours:
+    properties:
+      day_of_week:
+        type: "string"
+        enum: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+      available_minutes:
+        type: "number"
+    type: object
+  InProgressTimesheet:
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      search_keywords:
+        type: "string"
+      total_days_to_complete_timesheet:
+        type: "number"
+      created_at:
+        type: "string"
+      timesheet_schedule_hours:
+        type: "array"
+        items:
+          $ref: "#/definitions/InProgressTimesheetScheduleHours"
+
   User:
     properties:
       id:

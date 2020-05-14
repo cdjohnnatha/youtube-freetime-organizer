@@ -125,3 +125,28 @@
         items:
           $ref: "#/definitions/TimesheetVideos"
     type: object
+  InProgressTimesheetScheduleHours:
+    properties:
+      day_of_week:
+        type: "string"
+        enum: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+      available_minutes:
+        type: "number"
+    type: object
+  InProgressTimesheet:
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      search_keywords:
+        type: "string"
+      total_days_to_complete_timesheet:
+        type: "number"
+      created_at:
+        type: "string"
+      timesheet_schedule_hours:
+        type: "array"
+        items:
+          $ref: "#/definitions/InProgressTimesheetScheduleHours"
+

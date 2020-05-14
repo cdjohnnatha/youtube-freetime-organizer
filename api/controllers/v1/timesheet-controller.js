@@ -1,6 +1,11 @@
 const { houstonClientErrors } = require('houston-errors');
 const i18n = require('i18n');
-const { createTimesheetRepository, getTimesheetFromUserRespository } = require('../../repositories/timesheet-repository');
+const {
+  createTimesheetRepository,
+  getTimesheetFromUserRespository,
+  hasTimesheetInProgress,
+  getInProgressTimesheetRepository,
+} = require('../../repositories/timesheet-repository');
 const { getAvailableVideosForTodayRepository } = require('../../repositories/timesheet-scheduled-hours-repository');
 const { timesheetSchema } = require('./schemas/timesheet-schemas');
 const logger = require('../../config/logger');
@@ -36,7 +41,30 @@ const availableVideosController = async ({ body, meta }, res) => {
   };
 };
 
+const setVideoAsWatchedController = async ({ params, meta }, res) => {
+  try {
+    const { id } = params;
+    const watchedVideo = await setVideoAsWatchedRepository(meta.user_id, id);
+    res.status(200).send(watchedVideo);
+  } catch (error) {
+    logger.systemLogLevel({ error, level: 'error' });
+    res.status(BAD_REQUEST.code).send(formatErrorMessage(error));
+  };
+};
+
+const timesheetInProgressController = async ({ meta }, res) => {
+  try {
+    const inProgressTimesheet = await getInProgressTimesheetRepository(meta.user_id);
+    res.status(200).send(inProgressTimesheet);
+  } catch (error) {
+    logger.systemLogLevel({ error, level: 'error' });
+    res.status(BAD_REQUEST.code).send(formatErrorMessage(error));
+  };
+};
+
 module.exports = {
   createTimesheetController,
   availableVideosController,
+  setVideoAsWatchedController,
+  timesheetInProgressController,
 };
