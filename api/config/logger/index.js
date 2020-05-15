@@ -60,7 +60,7 @@ logger.systemLogLevel = async (
     error = null,
     functionName = '',
     meta = {},
-    level = 'debug',
+    level = process.env.LOG_LEVEL || 'debug',
     message = null
   },
   context
